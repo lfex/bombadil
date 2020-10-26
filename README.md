@@ -7,7 +7,7 @@
 
 [![Project Logo][logo]][logo-large]
 
-*A wrapper for the Erlang toml library that uses the map data structure*
+*A wrapper for the [Erlang toml library](https://github.com/dozzie/toml) that uses the map data structure*
 
 ##### Table of Contents
 
