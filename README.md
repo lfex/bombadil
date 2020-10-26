@@ -54,6 +54,12 @@ $ rebar3 compile
 $ rebar3 repl
 ```
 
+or for Erlang:
+
+```shell
+$ rebar3 shell
+```
+
 # Tests [&#x219F;](#table-of-contents)
 
 ```shell
