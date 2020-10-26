@@ -20,7 +20,9 @@
 
 ## About [&#x219F;](#table-of-contents)
 
-TBD
+This is an LFE TOML library 100% usable in any other BEAM language that is
+capable of building `rebar3`-based projects.
+
 
 ## Build [&#x219F;](#table-of-contents)
 
@@ -42,7 +44,37 @@ $ rebar3 as test ltest
 
 ## Usage [&#x219F;](#table-of-contents)
 
-TBD
+Read a TOML file, parse its contents, and convert the parsed data to an Erlang
+map:
+
+```lisp
+(set data (bombadil:read "priv/testing/deep-sections.toml"))
+```
+
+or from Erlang:
+
+```erlang
+Data = bombadil:read("priv/testing/deep-sections.toml").
+```
+
+The resulting data structure's elements may then be acceessed via the usual
+suspects:
+
+```lisp
+(mref data "ab")
+42
+(clj:get-in data '("a" "b" "d" "e"))
+#M("in" "deep")
+```
+
+or from Erlang:
+
+```erlang
+maps:get("ab", Data).
+42
+clj:'get-in'(Data, ["a", "b", "d", "e"]).
+#{"in" => "deep"}
+```
 
 ## License [&#x219F;](#table-of-contents)
 
