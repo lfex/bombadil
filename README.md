@@ -1,13 +1,13 @@
 # bombadil
 
+*A wrapper for the [Erlang toml library](https://github.com/dozzie/toml) that uses the map data structure*
+
 [![Build Status][gh-actions-badge]][gh-actions]
 [![LFE Versions][lfe-badge]][lfe]
 [![Erlang Versions][erlang-badge]][versions]
 [![Tag][github-tag-badge]][github-tag]
 
 [![Project Logo][logo]][logo-large]
-
-*A wrapper for the [Erlang toml library](https://github.com/dozzie/toml) that uses the map data structure*
 
 ##### Table of Contents
 
