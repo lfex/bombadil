@@ -39,7 +39,7 @@ $ rebar3 repl
 # Tests [&#x219F;](#table-of-contents)
 
 ```shell
-$ rebar3 as test ltest
+$ rebar3 ltest
 ```
 
 ## Usage [&#x219F;](#table-of-contents)
