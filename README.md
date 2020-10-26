@@ -62,6 +62,6 @@ Copyright © 2020, Duncan McGreggor <oubiwann@gmail.com>.
 [lfe-badge]: https://img.shields.io/badge/lfe-2.0-blue.svg
 [erlang-badge]: https://img.shields.io/badge/erlang-19%20to%2023-blue.svg
 [versions]: https://github.com/lfex/bombadil/blob/master/.github/workflows/cicd.yml
-[github-tags]: https://github.com/lfex/bombadil/tags
-[github-tags-badge]: https://img.shields.io/github/tag/lfex/bombadil.svg
+[github-tag]: https://github.com/lfex/bombadil/tags
+[github-tag-badge]: https://img.shields.io/github/tag/lfex/bombadil.svg
 [github-downloads]: https://img.shields.io/github/downloads/lfex/bombadil/total.svg
