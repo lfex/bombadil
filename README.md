@@ -21,8 +21,27 @@
 ## About [&#x219F;](#table-of-contents)
 
 This is an LFE TOML library 100% usable in any other BEAM language that is
-capable of building `rebar3`-based projects.
+capable of building `rebar3`-based projects. It does a couple of useful and
+convenient things:
 
+1. Provides a `read` function that recursively converts all of the `toml` 
+   Erlang `dict`s to maps and converts the `toml` library's type tuples to
+   just the values themselves.
+1. Provides Clojure-inspired functions for accessing and updating map data
+   (`assoc`, `assoc-in`, `get-in`). Note however that, due to the fact that
+   Erlang and LFE, unlike Clojure, do not support arbitrary arity in function
+   definitions, the signature and use of some of these functions is different
+   than the similar ones in Clojure.
+1. Provides a [set of functions](https://github.com/lfex/bombadil/blob/master/src/bombadil.lfe#L10)
+   in the `bombadil` module which just call the
+   [same functions](http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#index)
+   in the `toml` library. Note that these aliases have been Lispified
+   (underscores to dashes); if you're using `bombadil` in Erlang it might be
+   more convenient to use the dashed functions from `toml` to save the awkward
+   single quotes.
+1. Lastly, makes public the utility functions used for the conversion from
+   `toml` dicts to `bombadil` maps, in the event that these are useful for
+   your own project (or debugging).
 
 ## Build [&#x219F;](#table-of-contents)
 
@@ -57,8 +76,7 @@ or from Erlang:
 Data = bombadil:read("priv/testing/deep-sections.toml").
 ```
 
-The resulting data structure's elements may then be acceessed via the usual
-suspects:
+One may work with the resulting data structure in the following ways:
 
 ```lisp
 (mref data "ab")
