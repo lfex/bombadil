@@ -21,9 +21,16 @@
    (read 1) (read 2)
    (section->map 2)
    (toml->map 1)
+   ;; For Erlangers
+   (assoc_in 3)
+   (format_error 1)
+   (get_in 2)
+   (get_value 3) (get_value 4)
+   (read_file 1) (read_file 2)
    ;; Utility functions
    (assoc 2)
    (assoc-in 3)
+   (get 2)
    (get-in 2)
    (get-path 2)
    (get-paths 1) (get-paths 3)
@@ -83,6 +90,28 @@
   "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#sections-2"
   (toml:sections section toml))
 
+;; Spelled for Erlangers:
+
+(defun format_error (reason)
+  "Provided as a convenience for Erlangers."
+  (toml:format_error reason))
+
+(defun get_value (section key toml)
+   "Provided as a convenience for Erlangers."
+   (toml:get_value section key toml))
+
+(defun get_value (section key toml default)
+   "Provided as a convenience for Erlangers."
+   (toml:get_value section key toml default))
+
+(defun read_file (filename)
+  "Provided as a convenience for Erlangers."
+  (toml:read_file filename))
+
+(defun read_file (filename validator-func)
+  "Provided as a convenience for Erlangers."
+  (toml:read_file filename validator-func))
+
 ;;; Bombadil API
 
 (defun read (filename)
@@ -117,18 +146,25 @@
 ;; Map helpers
 
 (defun assoc
-  ((map '())
-   map)
-  ((map `((,k ,v) . ,tail))
-   (assoc (maps:merge map `#m(,k ,v)) tail)))
+  ((data '())
+   data)
+  ((data `((,k ,v) . ,tail))
+   (assoc (maps:merge data `#m(,k ,v)) tail)))
 
 (defun assoc-in
-  ((map '() _)
-   map)
-  ((map `(,k . ()) v)
-   (assoc map `((,k ,v))))
-  ((map `(,k . ,tail) v)
-   (assoc map `((,k ,(assoc-in (maps:get k map #m()) tail v))))))
+  ((data '() _)
+   data)
+  ((data `(,k . ()) v)
+   (assoc data `((,k ,v))))
+  ((data `(,k . ,tail) v)
+   (assoc data `((,k ,(assoc-in (maps:get k data #m()) tail v))))))
+
+(defun assoc_in (data keys value)
+  "Provided as a convenience for Erlangers."
+  (assoc-in data keys value))
+
+(defun get (data key)
+  (maps:get key data))
 
 ;; TOML Library Wrappers
 
@@ -142,6 +178,10 @@
      (result result)))
   ((data keys)
    (clj:get-in data keys)))
+
+(defun get_in (data keys)
+  "Provided as a convenience for Erlangers."
+  (get-in data keys))
 
 ;;; Utility Functions
 

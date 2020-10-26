@@ -36,9 +36,8 @@ convenient things:
    in the `bombadil` module which just call the
    [same functions](http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#index)
    in the `toml` library. Note that these aliases have been Lispified
-   (underscores to dashes); if you're using `bombadil` in Erlang it might be
-   more convenient to use the dashed functions from `toml` to save the awkward
-   single quotes.
+   (underscores to dashes); for Erlangers we've supplied aliases with
+   underscores.
 1. Lastly, makes public the utility functions used for the conversion from
    `toml` dicts to `bombadil` maps, in the event that these are useful for
    your own project (or debugging).
@@ -73,26 +72,67 @@ map:
 or from Erlang:
 
 ```erlang
-Data = bombadil:read("priv/testing/deep-sections.toml").
+1> Data = bombadil:read("priv/testing/deep-sections.toml").
 ```
 
 One may work with the resulting data structure in the following ways:
 
 ```lisp
-(mref data "ab")
+lfe> (bombadil:get data "ab")
 42
-(clj:get-in data '("a" "b" "d" "e"))
+lfe> (bombadil:get-in data '("a" "b" "d" "e"))
 #M("in" "deep")
+lfe> (bombadil:assoc-in data '("a" "b" "d" "e") 42)
+#M("ab" 42
+   "cd" 3.14159
+   "a" #M("stuff" "things"
+          "b" #M("other" "stuff"
+                 "c" #M("things" "n stuff")
+                 "d" #M("things" "n other things"
+                        "e" 42))
+        "f" #M("other" "things"))
+   "g" #M("h" #M("woah" "wut"))
+   "i" #M("j" #M("k" #M("no" "way")))
+   "l" #M("stuff" "fur reelies"))
 ```
 
 or from Erlang:
 
 ```erlang
-maps:get("ab", Data).
+2> bombadil:get(Data, "ab").
 42
-clj:'get-in'(Data, ["a", "b", "d", "e"]).
+3> bombadil:get_in(Data, ["a", "b", "d", "e"]).
 #{"in" => "deep"}
+4> bombadil:assoc_in(Data, ["a", "b", "d", "e"], 42).
+#{"ab" => 42,
+  "cd" => 3.14159,
+  "a" => #{"stuff" => "things"
+           "b" => #{"other" => "stuff"
+                    "c" => #{"things" => "n stuff"},
+                    "d" => #{"things" => "n other things"
+                             "e" => 42,}},
+           "f" => #{"other" => "things"}},
+  "g" => #{"h" => #{"woah" => "wut"}},
+  "i" => #{"j" => #{"k" => #{"no" => "way"}}},
+  "l" => #{"stuff" => "fur reelies"}}
 ```
+
+Note that since all of these functions have `data` as their first argument, the
+"thread-left" macro in LFE -- `->` -- may be used to chain outputs:
+
+```lisp
+lfe> (include-lib "lfe/include/clj.lfe")
+lfe> (-> data
+         (bombadil:assoc-in '("a" "b" "d" "e") 42)
+         (bombadil:get-in '("a" "b" "d" "e")))
+42
+```
+
+This is, of course, a contrived example; those who have used the data threading
+macros in the past are well familiar with the benefits (mostly in code clarity
+and thus ease of debugging and maintenance).
+
+Unfortunately this LFE macro convenience is not usable from Erlang.
 
 ## License [&#x219F;](#table-of-contents)
 
