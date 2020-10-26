@@ -1,0 +1,29 @@
+ab = 42
+cd = 3.14159
+
+[a]
+stuff = "things"
+
+[a.b]
+other = "stuff"
+
+[a.b.c]
+things = "n stuff"
+
+[a.b.d]
+things = "n other things"
+
+[a.b.d.e]
+in = "deep"
+
+[a.f]
+other = "things"
+
+[g.h]
+woah = "wut"
+
+[i.j.k]
+no = "way"
+
+[l]
+stuff = "fur reelies"
