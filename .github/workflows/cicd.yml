@@ -38,17 +38,6 @@ jobs:
       run: rebar3 as test do compile,lfe ltest -tall
     - name: Test Coverage
       run: rebar3 as test do proper -c, cover -v --min_coverage=0
-    - name: Notify CI/CD Slack Channel
-      uses: innocarpe/actions-slack@v1
-      with:
-        status: ${{ job.status }}
-        success_text: '✅ Build for ${{ github.repository }} on LFE/OTP ${{ matrix.otp_version }} succeeded! 😄🌈🐴🚢🐿 (commit id: ${{ github.sha }})'
-        failure_text: '❌ Build for ${{ github.repository }} on LFE/OTP ${{ matrix.otp_version }} failed! 🤬💣🔥🚒 (commit id: ${{ github.sha }})'
-        cancelled_text: '🚧 Build for ${{ github.repository }} on LFE/OTP ${{ matrix.otp_version }} was cancelled ... 😯🦡 (commit id: ${{ github.sha }})'
-      env:
-        GITHUB_TOKEN: ${{ secrets.CICD_BOT_TOKEN }}
-        SLACK_WEBHOOK_URL: ${{ secrets.CICD_BOT_WEBHOOK }}
-      if: always()
 
   old-builds:
     name: Old Erlang ${{ matrix.otp_version }} build
