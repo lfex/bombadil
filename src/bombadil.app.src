@@ -9,6 +9,13 @@
   {env,[]},
   {modules, []},
 
-  {licenses, ["Apache 2.0"]},
-  {links, []}
+  %% Package metadata:
+  {pkg_name, bombadil},
+  {maintainers, ["Duncan McGreggor"]},
+  {licenses, ["Apache-2"]},
+  {links, [
+    {"GitHub", "https://github.com/lfex/bombadil"},
+    {"Hex", "https://hex.pm/packages/bombadil"}
+  ]},
+  {exclude_files, ["priv/images/*", "priv/testing/*"]}
  ]}.
