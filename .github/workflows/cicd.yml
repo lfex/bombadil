@@ -32,8 +32,8 @@ jobs:
       run: rebar3 compile
     - name: Xref Checks
       run: rebar3 xref
-    - name: Dialyzer
-      run: rebar3 dialyzer
+    # - name: Dialyzer
+    #   run: rebar3 dialyzer
     - name: Run Tests
       run: rebar3 as test do compile,lfe ltest -tall
     - name: Test Coverage

@@ -24,7 +24,7 @@ This is an LFE TOML library 100% usable in any other BEAM language that is
 capable of building `rebar3`-based projects. It does a couple of useful and
 convenient things:
 
-1. Provides a `read` function that recursively converts all of the `toml` 
+1. Provides a `read` function that recursively converts all of the `toml`
    Erlang `dict`s to maps and converts the `toml` library's type tuples to
    just the values themselves.
 1. Provides Clojure-inspired functions for accessing and updating map data
@@ -45,25 +45,25 @@ convenient things:
 ## Build [&#x219F;](#table-of-contents)
 
 ```shell
-$ rebar3 compile
+rebar3 compile
 ```
 
 # Start the Project REPL [&#x219F;](#table-of-contents)
 
 ```shell
-$ rebar3 repl
+rebar3 repl
 ```
 
 or for Erlang:
 
 ```shell
-$ rebar3 shell
+rebar3 shell
 ```
 
 # Tests [&#x219F;](#table-of-contents)
 
 ```shell
-$ rebar3 ltest
+rebar3 ltest
 ```
 
 ## Usage [&#x219F;](#table-of-contents)
@@ -146,18 +146,15 @@ Apache License, Version 2.0
 
 Copyright © 2020, Duncan McGreggor <oubiwann@gmail.com>.
 
-<!-- Named page links below: /-->
+[//]: ---Named-Links---
 
 [logo]: priv/images/logo.png
 [logo-large]: https://en.wikipedia.org/wiki/File:Gallen-Kallela_The_defence_of_the_Sampo.jpg
-[github]: https://github.com/lfex/bombadil
-[gitlab]: https://gitlab.com/lfex/bombadil
 [gh-actions-badge]: https://github.com/lfex/bombadil/workflows/ci%2Fcd/badge.svg
 [gh-actions]: https://github.com/lfex/bombadil/actions
 [lfe]: https://github.com/rvirding/lfe
-[lfe-badge]: https://img.shields.io/badge/lfe-2.0-blue.svg
-[erlang-badge]: https://img.shields.io/badge/erlang-19%20to%2023-blue.svg
+[lfe-badge]: https://img.shields.io/badge/lfe-2.1-blue.svg
+[erlang-badge]: https://img.shields.io/badge/erlang-20%20to%2025-blue.svg
 [versions]: https://github.com/lfex/bombadil/blob/master/.github/workflows/cicd.yml
 [github-tag]: https://github.com/lfex/bombadil/tags
 [github-tag-badge]: https://img.shields.io/github/tag/lfex/bombadil.svg
-[github-downloads]: https://img.shields.io/github/downloads/lfex/bombadil/total.svg
