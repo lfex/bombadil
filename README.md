@@ -13,7 +13,6 @@
 
 * [About](#about-)
 * [Build](#build-)
-* [Start the Project REPL](#start-the-repl-)
 * [Tests](#tests-)
 * [Usage](#usage-)
 * [License](#license-)
@@ -32,22 +31,11 @@ convenience wrapper for tomerl, with just a touch of sugar on top.
 rebar3 compile
 ```
 
-# Start the Project REPL [&#x219F;](#table-of-contents)
-
-```shell
-rebar3 repl
-```
-
-or for Erlang:
-
-```shell
-rebar3 shell
-```
 
 # Tests [&#x219F;](#table-of-contents)
 
 ```shell
-rebar3 ltest
+rebar3 as test ltest
 ```
 
 ## Usage [&#x219F;](#table-of-contents)

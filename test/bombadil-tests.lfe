@@ -73,3 +73,10 @@
     (is-equal #"d" (bombadil:get data "c" #"d"))
     (is-equal #"bleep" (bombadil:get-in data '("a" "b") #"bleep"))
     (is-equal #"bloop" (bombadil:get-in data '("c" "d" "e") #"bloop"))))
+
+(deftest threading
+  (let ((`#(ok ,data) (bombadil:read "priv/testing/deep-sections.toml")))
+    (is-equal 42
+              (clj:-> data
+                      (bombadil:assoc-in '("a" "b" "d" "e") 42)
+                      (bombadil:get-in '("a" "b" "d" "e"))))))
