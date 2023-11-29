@@ -140,7 +140,7 @@ Copyright © 2020-2023, Duncan McGreggor <oubiwann@gmail.com>.
 [gh-actions]: https://github.com/lfex/bombadil/actions
 [lfe]: https://github.com/rvirding/lfe
 [lfe-badge]: https://img.shields.io/badge/lfe-2.1-blue.svg
-[erlang-badge]: https://img.shields.io/badge/erlang-20%20to%2025-blue.svg
+[erlang-badge]: https://img.shields.io/badge/erlang-23%20to%2026-blue.svg
 [versions]: https://github.com/lfex/bombadil/blob/master/.github/workflows/cicd.yml
 [github-tag]: https://github.com/lfex/bombadil/tags
 [github-tag-badge]: https://img.shields.io/github/tag/lfex/bombadil.svg
