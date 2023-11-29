@@ -1,155 +1,46 @@
-;;;; The module provides wrapper functions for the Erlang TOML library as well
-;;;; as providing support for converting parsed TOML as a map (instead of the
-;;;; dicts used by the TOML library).
-;;;;
-;;;; As such, it makes extensive use of the Erlang TOML library:
-;;;; * https://github.com/dozzie/toml
-;;;; * http://dozzie.jarowit.net/api/erlang-toml/
 (defmodule bombadil
   (export
-   ;; TOML API wrappers
-   (exists 2) (exists 3)
-   (foldk 4)
-   (folds 4)
-   (format-error 1)
-   (get-value 3) (get-value 4)
-   (keys 2)
-   (parse 1) (parse 2)
-   (read-file 1) (read-file 2)
-   (sections 2)
-   ;; Bombadil API
-   (read 1) (read 2)
-   (section->map 2)
-   (toml->map 1)
-   ;; For Erlangers
-   (assoc_in 3)
-   (format_error 1)
-   (get_in 2)
-   (get_value 3) (get_value 4)
-   (read_file 1) (read_file 2)
-   ;; Utility functions
+   (keys 1)
+   (get 2) (get 3)
+   (get-in 2) (get-in 3)
    (assoc 2)
    (assoc-in 3)
-   (get 2)
-   (get-in 2)
-   (get-path 2)
-   (get-paths 1) (get-paths 3)
-   (toml-> 1)))
+   (parse 1)
+   (read 1)
+   (format-error 1))
+  ;; For the Erlangers:
+  (export
+   (get_in 2) (get_in 3)
+   (assoc_in 3)
+   (format_error 1)))
 
-;;; TOML API
+(defun keys (parsed)
+  (maps:keys parsed))
 
-(defun exists (section toml)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#exists-2"
-  (toml:exists section toml))
+(defun get
+  ((parsed key) (when (is_binary key))
+   (mref parsed key))
+  ((parsed key)
+   (get parsed (key->bin key))))
 
-(defun exists (section key toml)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#exists-3"
-  (toml:exists section key toml))
+(defun get (parsed key default)
+  (get parsed key))
 
-(defun foldk (section func acc toml)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#foldk-4"
-  (toml:foldk section func acc toml))
+(defun get-in
+  ((parsed keys)
+   (let ((keys (keys->bin keys)))
+     (case (tomerl:get parsed keys)
+       (`#(ok ,results) results)
+       (err err)))))
 
-(defun folds (section func acc toml)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#folds-4"
-  (toml:folds section func acc toml))
-
-(defun format-error (reason)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#format_error-1"
-  (toml:format_error reason))
-
-(defun get-value (section key toml)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#get_value-3"
-  (toml:get_value section key toml))
-
-(defun get-value (section key toml default)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#get_value-4"
-  (toml:get_value section key toml default))
-
-(defun keys (section toml)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#keys-2"
-  (toml:keys section toml))
-
-(defun parse (string)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#parse-1"
-  (toml:parse string))
-
-(defun parse (string validator-func)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#parse-2"
-  (toml:parse string validator-func))
-
-(defun read-file (filename)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#read_file-1"
-  (toml:read_file filename))
-
-(defun read-file (filename validator-func)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#read_file-2"
-  (toml:read_file filename validator-func))
-
-(defun sections (section toml)
-  "http://dozzie.jarowit.net/api/erlang-toml/default/toml.html#sections-2"
-  (toml:sections section toml))
-
-;; Spelled for Erlangers:
-
-(defun format_error (reason)
-  "Provided as a convenience for Erlangers."
-  (toml:format_error reason))
-
-(defun get_value (section key toml)
-   "Provided as a convenience for Erlangers."
-   (toml:get_value section key toml))
-
-(defun get_value (section key toml default)
-   "Provided as a convenience for Erlangers."
-   (toml:get_value section key toml default))
-
-(defun read_file (filename)
-  "Provided as a convenience for Erlangers."
-  (toml:read_file filename))
-
-(defun read_file (filename validator-func)
-  "Provided as a convenience for Erlangers."
-  (toml:read_file filename validator-func))
-
-;;; Bombadil API
-
-(defun read (filename)
-  (read filename '()))
-
-(defun read (filename opts)
-  (let ((toml (read-file filename))
-        (return-map? (proplists:get_value 'return opts 'true)))
-    (case toml
-      (`#(ok ,result) (if return-map? (toml->map result) result))
-      (err err))))
-
-(defun section->map (toml section-path)
-  (foldk section-path
-         (lambda (_section k v acc)
-           (maps:merge acc
-                       `#m(,k ,(toml-> v))))
-         #m()
-         toml))
-
-(defun toml->map (toml)
-  (lists:foldl (match-lambda
-                 (('() acc)
-                  (maps:merge acc (section->map toml '())))
-                 ((x acc)
-                  (assoc-in acc x (section->map toml x))))
-               #m()
-               (get-paths toml)))
-
-;;; Utility functions
-
-;; Map helpers
+(defun get-in (parsed key default)
+  (get-in parsed key))
 
 (defun assoc
   ((data '())
    data)
   ((data `((,k ,v) . ,tail))
-   (assoc (maps:merge data `#m(,k ,v)) tail)))
+   (assoc (maps:merge data `#m(,(key->bin k) ,v)) tail)))
 
 (defun assoc-in
   ((data '() _)
@@ -157,69 +48,31 @@
   ((data `(,k . ()) v)
    (assoc data `((,k ,v))))
   ((data `(,k . ,tail) v)
-   (assoc data `((,k ,(assoc-in (maps:get k data #m()) tail v))))))
+   (assoc data `((,k ,(assoc-in (maps:get (key->bin k) data #m()) tail v))))))
 
-(defun assoc_in (data keys value)
-  "Provided as a convenience for Erlangers."
-  (assoc-in data keys value))
+(defun parse (data)
+  (tomerl:parse data))
 
-(defun get (data key)
-  (maps:get key data))
+(defun read (filename)
+  (tomerl:read_file filename))
 
-;; TOML Library Wrappers
+(defun format-error (reason)
+  (tomerl_parser:format_error reason))
 
-(defun get-in
-  ((toml keys) (when (andalso (is_tuple toml) (== (element 1 toml) 'dict)))
-   (case (get-value (lists:droplast keys)
-                    (lists:last keys)
-                    toml)
-     (`#(,_type ,v) v)
-     ('none 'undefined)
-     (result result)))
-  ((data keys)
-   (clj:get-in data keys)))
+;;; For the Erlangers
 
-(defun get_in (data keys)
-  "Provided as a convenience for Erlangers."
-  (get-in data keys))
+(defun get_in (p k) (get-in p k))
+(defun get_in (p k d) (get-in p k d))
+(defun assoc_in (d l v) (assoc-in d l v))
+(defun format_error (r) (format-error r))
 
-;;; Utility Functions
+;;; Private functions
 
-(defun get-path (toml path)
-  (toml:folds path
-              (lambda (toml s acc)
-                (lists:append acc `(,s)))
-              '()
-              toml))
+(defun key->bin (key)
+  (list_to_binary (io_lib:format "~s" (list key))))
 
-(defun get-paths (toml)
-  (get-paths toml 'undefined '(())))
-
-(defun get-paths
-  ((_toml '() paths)
-   paths)
-  ((toml path paths)
-   (let* ((path (if (is_list path) path '(())))
-          (p (lists:append (lists:map (lambda (x)
-                                        (get-path toml x))
-                                      path)))
-          (ps (++ paths p)))
-     (get-paths toml p ps))))
-
-(defun toml->
-  ((`#(string ,string))
-   string)
-  ((`#(integer ,int))
-   int)
-  ((`#(float ,float))
-   float)
-  ((`#(boolean ,bool))
-   bool)
-  ((`#(datetime ,dt))
-   dt)
-  ((`#(array #(,_type ,list)))
-   list)
-  ((`#(empty ,list))
-   list)
-  ((`#(object #(,_type ,obj)))
-   obj))
+(defun keys->bin (keys)
+  (list-comp ((<- k keys))
+    (if (is_binary k)
+      k
+      (key->bin k))))
