@@ -10,7 +10,7 @@
   {modules, []},
 
   %% Package metadata:
-  {pkg_name, 'toml-bombadil'},
+  {pkg_name, 'toml_bombadil'},
   {maintainers, ["Duncan McGreggor"]},
   {licenses, ["Apache-2"]},
   {links, [
