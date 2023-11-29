@@ -40,6 +40,14 @@ rebar3 as test ltest
 
 ## Usage [&#x219F;](#table-of-contents)
 
+Add to your `rebar.config` file:
+
+``` erlang
+{deps, [
+  {bombadil, "0.4.0", {pkg, toml_bombadil}}
+]}.
+```
+
 Read a TOML file, parse its contents, and convert the parsed data to an Erlang
 map:
 
