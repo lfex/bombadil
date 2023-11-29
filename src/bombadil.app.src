@@ -1,5 +1,5 @@
 {application, 'bombadil',
- [{description, "A wrapper for the Erlang toml library with convenient data extraction functions"},
+ [{description, "A wrapper for the Erlang tomerl library"},
   {vsn, "0.4.0"},
   {registered, []},
   {applications,

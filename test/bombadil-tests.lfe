@@ -64,4 +64,12 @@
         #"i" #M(#"j" #M(#"k" #M(#"no" #"way")))
         #"l" #M(#"stuff" #"fur reelies"))
      result)))
-    
+
+(deftest defaults
+  (let ((`#(ok ,data) (bombadil:parse "a = \"b\"")))
+    ;; quick sanity check and test of the parse func:
+    (is-equal #"b" (bombadil:get data "a"))
+    ;; now for the defaults ...
+    (is-equal #"d" (bombadil:get data "c" #"d"))
+    (is-equal #"bleep" (bombadil:get-in data '("a" "b") #"bleep"))
+    (is-equal #"bloop" (bombadil:get-in data '("c" "d" "e") #"bloop"))))

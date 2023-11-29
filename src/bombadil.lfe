@@ -24,7 +24,9 @@
    (get parsed (key->bin key))))
 
 (defun get (parsed key default)
-  (get parsed key))
+  (if (not (maps:is_key key parsed))
+    default
+    (get parsed key)))
 
 (defun get-in
   ((parsed keys)
@@ -34,7 +36,9 @@
        (err err)))))
 
 (defun get-in (parsed key default)
-  (get-in parsed key))
+  (case (get-in parsed key)
+    (#(error not_found) default)
+    (result result)))
 
 (defun assoc
   ((data '())
