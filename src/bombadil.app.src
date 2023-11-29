@@ -1,6 +1,6 @@
 {application, 'bombadil',
- [{description, "An LFE library"},
-  {vsn, "0.3.1"},
+ [{description, "A wrapper for the Erlang toml library with convenient data extraction functions"},
+  {vsn, "0.4.0"},
   {registered, []},
   {applications,
    [kernel,
@@ -10,12 +10,15 @@
   {modules, []},
 
   %% Package metadata:
-  {pkg_name, bombadil},
+  {pkg_name, 'toml-bombadil'},
   {maintainers, ["Duncan McGreggor"]},
   {licenses, ["Apache-2"]},
   {links, [
     {"GitHub", "https://github.com/lfex/bombadil"},
-    {"Hex", "https://hex.pm/packages/bombadil"}
+    {"Hex", "https://hex.pm/packages/toml-bombadil"}
   ]},
-  {exclude_files, ["priv/images/*", "priv/testing/*"]}
- ]}.
+  {exclude_files, [
+    "priv/images/*",
+    "priv/testing/*"
+  ]}
+]}.
