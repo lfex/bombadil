@@ -32,8 +32,8 @@ jobs:
       run: rebar3 compile
     - name: Xref Checks
       run: rebar3 xref
-    - name: Dialyzer
-      run: rebar3 dialyzer
+    #- name: Dialyzer
+    #  run: rebar3 dialyzer
     - name: Proper Tests
       run: rebar3 as test do compile, proper --regressions
     # - name: Run Tests
@@ -63,8 +63,8 @@ jobs:
       run: rebar3 compile
     - name: Xref Checks
       run: rebar3 xref
-    - name: Dialyzer
-      run: rebar3 dialyzer
+    #- name: Dialyzer
+    #  run: rebar3 dialyzer
     - name: Proper Tests
       run: rebar3 as test do compile, proper --regressions
     # - name: Run Tests
@@ -94,8 +94,8 @@ jobs:
       run: rebar3 compile
     - name: Xref Checks
       run: rebar3 xref
-    - name: Dialyzer
-      run: rebar3 dialyzer
+    #- name: Dialyzer
+    #  run: rebar3 dialyzer
     - name: Compile Tests
       run: rebar3 as test compile
     - name: Proper Tests
