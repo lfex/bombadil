@@ -80,7 +80,7 @@ jobs:
 
     strategy:
       matrix:
-        otp_version: ['23', '22', '21']
+        otp_version: ['23']
 
     steps:
     - uses: actions/checkout@v2
