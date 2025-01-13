@@ -1,5 +1,5 @@
 {application, 'bombadil',
- [{description, "A wrapper for the Erlang tomerl library"},
+ [{description, "An LFE wrapper for the Erlang tomerl library"},
   {vsn, "0.4.0"},
   {registered, []},
   {applications,
@@ -11,14 +11,12 @@
 
   %% Package metadata:
   {pkg_name, 'toml_bombadil'},
-  {maintainers, ["Duncan McGreggor"]},
-  {licenses, ["Apache-2"]},
+  {licenses, ["Apache-2.0"]},
   {links, [
     {"GitHub", "https://github.com/lfex/bombadil"},
     {"Hex", "https://hex.pm/packages/toml-bombadil"}
   ]},
-  {exclude_files, [
-    "priv/images/*",
-    "priv/testing/*"
+  {exclude_paths, [
+    "priv/images"
   ]}
 ]}.
